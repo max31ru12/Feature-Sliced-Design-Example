@@ -1,1 +1,3 @@
-export { TodoDetailsPage } from "./ui"
+export { TodoDetailsPage } from "./TodoDetailPage.tsx"
+
+

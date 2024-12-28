@@ -1,5 +1,7 @@
 import {createBrowserRouter} from "react-router-dom";
 import {MainLayout} from "../../shared/ui/main-layout";
+import {TodoListPage} from "../../pages/todo-list-page";
+import {TodoDetailsPage} from "../../pages/todo-details-page";
 
 export const router = createBrowserRouter([
     {
@@ -8,11 +10,11 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <>todo list</>,
+                element: <TodoListPage />,
             },
             {
                 path: ":id",
-                element: <>Todo detail</>
+                element: <TodoDetailsPage />
             }
         ]
     }
