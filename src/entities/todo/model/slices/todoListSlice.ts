@@ -30,9 +30,9 @@ const todoListSlice = createSlice({
             state.items = action.payload
             state.isLoading = false
             state.error = null
-        }).addCase(fetchTodoList.rejected, (state: TodoListState, action: PayloadAction) => {
+        }).addCase(fetchTodoList.rejected, (state: TodoListState) => {
             state.isLoading = false
-            state.error = action.error.message || "Error fetching todos"
+            state.error = "Error fetching todos"
         })
     }
 })

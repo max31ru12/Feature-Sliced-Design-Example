@@ -1,17 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Todo } from "../../../../shared/api/todo/interfaces.ts";
 import { fetchTodo, fetchTodoList } from "../thunks";
-// import { updateTodo } from "../thunks";
+import { updateTodo } from "../thunks";
 
 
 interface TodoState {
-    item: null | Todo
+    item: Todo
     isLoading: boolean
     error: null | string
 }
 
 const initialState: TodoState = {
-    item: null,
+    item: {
+        id: 0,
+        title: "",
+        userId: 0,
+        completed: false
+    },
     isLoading: true,
     error: null
 }
@@ -27,9 +32,17 @@ const todoSlice = createSlice({
         }).addCase(fetchTodo.fulfilled, (state: TodoState, action) => {
             state.isLoading = false
             state.item = action.payload
-        }).addCase(fetchTodoList.rejected, (state: TodoState, action) => {
-            state.error = action.error.message || "Error fetching todo"
+        }).addCase(fetchTodoList.rejected, (state: TodoState) => {
+            state.error = "Error fetching todo"
             state.isLoading = false
+        }).addCase(updateTodo.pending, (state) => {
+            state.isLoading = true
+        }).addCase(updateTodo.fulfilled, (state, action) => {
+            state.item = {...action.payload}
+            state.isLoading = false
+        }).addCase(updateTodo.rejected, (state) => {
+            state.isLoading = false
+            state.error = "Error updating todo"
         })
     }
 })

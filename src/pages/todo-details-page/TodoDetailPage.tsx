@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 
-import {fetchTodo, TaskCard} from "../../entities/todo";
+import { fetchTodo, TaskCard } from "../../entities/todo";
 import { useAppSelector, useAppDispatch } from "../../shared/store";
-import { Space, Spin } from "antd";
+import { Space } from "antd";
+import {ToggleTask} from "../../features/toggle-task";
 
 
 export const TodoDetailsPage = () => {
@@ -21,12 +22,17 @@ export const TodoDetailsPage = () => {
     }, [id, dispatch]);
 
     if (error !== null) {
-        return <div>Error: {errors}</div>;
+        return <div>Error: {error}</div>;
     }
 
     return (
         <Space>
-            { isLoading ? <Spin /> : <TaskCard title={item.title} id={item.id} completed={item.completed}/>}
+                <TaskCard
+                    title={`Task#${item.id}`}
+                    text={item.title}
+                    actions={!isLoading? [<ToggleTask todo={item} defaultChecked={item.completed}/>]: []}
+                    isLoading={isLoading}
+                />
         </Space>
     )
 }
